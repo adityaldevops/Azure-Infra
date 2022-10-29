@@ -1,0 +1,44 @@
+Azure Powershell Automation Tasks
+
+Powershell version:$PSVersionTable.PSVersion or pwsh -ver
+-A PowerShell command is called a cmdlet (pronounced "command-let"). A cmdlet is a command that manipulates a single feature. The term cmdlet is intended to imply "small command"
+for example, Get-Process, Format-Table, and Start-Service
+Get-Help -Name Get-ChildItem -Detailed
+-Cmdlets are shipped in modules. A PowerShell Module is a DLL that includes the code to process each available cmdlet. 
+Get-Module
+-Az is the formal name for the Azure PowerShell module, which contains cmdlets to work with Azure features
+-Install the Az PowerShell module
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery
+Use the Set-ExecutionPolicy cmdlet to change the policy to "RemoteSigned"
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+-connect
+Connect-AzAccount
+Set-AzContext -Subscription '00000000-0000-0000-0000-000000000000'
+Get-AzResourceGroup
+Get-AzResourceGroup | Format-Table
+New-AzResourceGroup -Name <name> -Location <location>
+Get-AzResource | Format-Table
+Get-AzResource -ResourceGroupName ExerciseResources
+New-AzVm
+       -ResourceGroupName <resource group name>
+       -Name <machine name>
+       -Credential <credentials object>
+       -Location <location>
+       -Image <image name>
+	   
+	New-AzVM -Name MyVm -ResourceGroupName ExerciseResources -Credential (Get-Credential) ...
+	Remove-AzVM	Deletes an Azure VM.
+---x---
+Start-AzVM	Start a stopped VM.
+Stop-AzVM	Stop a running VM.
+Restart-AzVM	Restart a VM.
+Update-AzVM	Updates the configuration for a VM
+---x---
+$ResourceGroupName = "ExerciseResources"
+$vm = Get-AzVM  -Name MyVM -ResourceGroupName $ResourceGroupName
+$vm.HardwareProfile.vmSize = "Standard_DS3_v2"
+
+Update-AzVM -ResourceGroupName $ResourceGroupName  -VM $vm
+-----x----
+
+
